@@ -1,0 +1,7 @@
+_materials/
+.DS_Store
+artifact.html
+
+# Local notes, kept out of the public repo
+CLAUDE.md
+README.md
