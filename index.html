@@ -19,19 +19,20 @@ img { max-width: 100%; }
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <style>
-/* Layout: sticky identity column on the left, one reading column on the right; an RSVP "monitor" opens the page. */
+/* Layout: sticky identity column on the left, one reading column on the right.
+   Visual rules follow common advice for academic sites: white background, charcoal text,
+   one accent color, two typefaces, and dense detail kept behind "show" toggles. */
 :root {
-  --paper: #F4F6F3;
+  --paper: #FFFFFF;
   --surface: #FFFFFF;
-  --ink: #17201C;
-  --muted: #59645E;
-  --rule: #D9DED8;
-  --accent: #2B6A51;
-  --accent-soft: #E1EDE6;
-  --gold: #94711C;
-  --gold-soft: #F2EAD5;
+  --tint: #F3F5F7;
+  --ink: #1C2024;
+  --muted: #5A6169;
+  --rule: #E3E6EA;
+  --accent: #1F4E8C;
+  --accent-soft: #E8EEF7;
   --screen: #808583;
   --screen-ink: #FFFFFF;
   --screen-edge: #2A302D;
@@ -44,14 +45,13 @@ img { max-width: 100%; }
 
   --display: "Newsreader", "Iowan Old Style", Georgia, serif;
   --body: "IBM Plex Sans", -apple-system, "Segoe UI", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  --s1: 0.8125rem; --s2: 0.9375rem; --s3: 1.0625rem; --s4: 1.375rem; --s5: 1.875rem; --s6: 2.75rem;
+  --s1: 0.8125rem; --s2: 0.9375rem; --s3: 1.0625rem; --s4: 1.25rem; --s5: 1.75rem; --s6: 2.25rem;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #0F1412; --surface: #161C19; --ink: #E3E9E5; --muted: #9AA59F; --rule: #2A332E;
-    --accent: #74B899; --accent-soft: #1B2B23; --gold: #D6B056; --gold-soft: #2A2416;
+    --paper: #111418; --surface: #111418; --tint: #1B2026; --ink: #E6E8EB; --muted: #A0A7B0; --rule: #2A3038;
+    --accent: #8AB4F0; --accent-soft: #1C2A3D;
     --screen: #6E7371; --screen-ink: #FFFFFF; --screen-edge: #050706;
     --stim-yellow: #F2B51D; --stim-blue: #3B73C9; --stim-ink: #1B1E1C;
     --fig-bg: #FFFFFF;
@@ -59,11 +59,11 @@ img { max-width: 100%; }
   }
 }
 :root[data-theme="dark"] {
-  --paper: #0F1412; --surface: #161C19; --ink: #E3E9E5; --muted: #9AA59F; --rule: #2A332E;
-  --accent: #74B899; --accent-soft: #1B2B23; --gold: #D6B056; --gold-soft: #2A2416;
+  --paper: #111418; --surface: #111418; --tint: #1B2026; --ink: #E6E8EB; --muted: #A0A7B0; --rule: #2A3038;
+  --accent: #8AB4F0; --accent-soft: #1C2A3D;
   --screen: #6E7371; --screen-ink: #FFFFFF; --screen-edge: #050706;
-    --stim-yellow: #F2B51D; --stim-blue: #3B73C9; --stim-ink: #1B1E1C;
-    --fig-bg: #FFFFFF;
+  --stim-yellow: #F2B51D; --stim-blue: #3B73C9; --stim-ink: #1B1E1C;
+  --fig-bg: #FFFFFF;
   color-scheme: dark;
 }
 
@@ -84,19 +84,13 @@ a:hover { text-decoration-thickness: 2px; }
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
   padding-block: 56px 40px;
-  display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 72px;
+  display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 64px;
 }
 
 /* ---------- identity column ---------- */
-.side { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 56px); align-self: start; display: grid; gap: 28px; }
-.mono-mark {
-  width: 88px; height: 88px; border-radius: 50%;
-  display: grid; place-items: center;
-  background: var(--accent); color: var(--paper);
-  font-family: var(--display); font-size: 2.1rem; font-weight: 500; letter-spacing: 0.02em;
-  object-fit: cover;
-}
-.who h1 { font-family: var(--display); font-weight: 500; font-size: var(--s5); line-height: 1.1; margin: 0 0 8px; text-wrap: balance; }
+.side { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 56px); align-self: start; display: grid; gap: 24px; }
+.mono-mark { display: block; width: 112px; height: 112px; border-radius: 50%; object-fit: cover; background: var(--tint); }
+.who h1 { font-family: var(--display); font-weight: 500; font-size: var(--s5); line-height: 1.15; margin: 0 0 6px; text-wrap: balance; }
 .who p { margin: 0; color: var(--muted); font-size: var(--s2); line-height: 1.5; }
 .side nav ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; border-left: 1px solid var(--rule); }
 .side nav a {
@@ -104,34 +98,43 @@ a:hover { text-decoration-thickness: 2px; }
   color: var(--muted); text-decoration: none; font-size: var(--s2);
 }
 .side nav a:hover, .side nav a.on { color: var(--ink); border-left-color: var(--accent); }
-.contact { display: grid; gap: 10px; font-size: var(--s2); }
-.contact .row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0; }
-.contact .lbl { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); width: 100%; }
-.email { font-family: var(--mono); font-size: var(--s1); user-select: all; overflow-wrap: anywhere; }
+.contact { display: grid; gap: 12px; font-size: var(--s2); }
+.contact .row { display: flex; align-items: center; gap: 2px 8px; flex-wrap: wrap; min-width: 0; }
+.contact .lbl { font-size: var(--s1); color: var(--muted); width: 100%; }
+.email { user-select: all; overflow-wrap: anywhere; }
 .copy {
-  font: inherit; font-size: 0.75rem; padding: 2px 8px; border-radius: 4px;
+  font: inherit; font-size: 0.75rem; padding: 1px 8px; border-radius: 4px;
   border: 1px solid var(--rule); background: var(--surface); color: var(--ink); cursor: pointer;
 }
 .copy:hover { border-color: var(--accent); }
 
 /* ---------- main column ---------- */
-main { min-width: 0; display: grid; gap: 88px; }
-section { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 24px); }
-.eyebrow { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
-h2 { font-family: var(--display); font-weight: 500; font-size: var(--s5); line-height: 1.15; margin: 0 0 28px; text-wrap: balance; }
-h3 { font-family: var(--display); font-weight: 500; font-size: var(--s4); line-height: 1.25; margin: 0; text-wrap: balance; }
+main { min-width: 0; display: grid; }
+main > section { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 24px); padding-block: 56px; border-top: 1px solid var(--rule); }
+main > section:first-child { padding-top: 0; border-top: 0; }
+h2 { font-family: var(--display); font-weight: 500; font-size: var(--s5); line-height: 1.2; margin: 0 0 24px; text-wrap: balance; }
+h3 { font-family: var(--display); font-weight: 500; font-size: var(--s4); line-height: 1.3; margin: 0; text-wrap: balance; }
 .prose { max-width: 66ch; }
 .prose p { margin: 0 0 1em; }
+.lede { margin: -8px 0 24px; max-width: 66ch; font-size: var(--s2); color: var(--muted); }
+.lede.tail { margin: 16px 0 0; }
 
-/* hero */
-.hero { display: grid; gap: 36px; }
-.thesis { font-family: var(--display); font-weight: 400; font-size: var(--s6); line-height: 1.08; letter-spacing: -0.01em; margin: 0; max-width: 20ch; text-wrap: balance; }
-.thesis em { font-style: italic; color: var(--accent); }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 4px 0 0; padding: 0; }
-.chips li { font-size: var(--s1); padding: 3px 10px; border: 1px solid var(--rule); border-radius: 999px; color: var(--muted); background: var(--surface); }
+/* about */
+.intro { display: grid; gap: 22px; }
+.statement { font-family: var(--display); font-weight: 400; font-size: var(--s6); line-height: 1.15; letter-spacing: -0.005em; margin: 0; max-width: 24ch; text-wrap: balance; }
+.statement em { font-style: italic; color: var(--accent); }
+.prose .status { font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.chips li { font-size: var(--s1); padding: 3px 10px; border-radius: 999px; color: var(--ink); background: var(--tint); }
 
-/* RSVP monitor */
-.rsvp { margin: 0; display: grid; gap: 12px; max-width: 640px; }
+/* news */
+.news { list-style: none; margin: 0; padding: 0; display: grid; max-width: 72ch; }
+.news li { display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 16px; padding: 10px 0; border-top: 1px solid var(--rule); font-size: var(--s2); }
+.news li:last-child { border-bottom: 1px solid var(--rule); }
+.news .d { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* RSVP monitor (Experiment 1 task) */
+.rsvp { margin: 4px 0; display: grid; gap: 10px; max-width: 600px; }
 .monitor { background: var(--screen-edge); padding: 10px; border-radius: 10px; }
 .screen {
   position: relative; aspect-ratio: 16 / 7; max-width: 100%;
@@ -141,7 +144,7 @@ h3 { font-family: var(--display); font-weight: 500; font-size: var(--s4); line-h
 }
 .stream {
   position: relative; width: 26%; aspect-ratio: 1; display: grid; place-items: center;
-  font-size: clamp(1.75rem, 6vw, 3.25rem); font-weight: 700; line-height: 1;
+  font-size: clamp(1.75rem, 5vw, 3rem); font-weight: 700; line-height: 1;
   border-radius: 6px; outline: 2px dashed transparent; outline-offset: 6px;
   transition: outline-color 120ms;
 }
@@ -149,46 +152,67 @@ h3 { font-family: var(--display); font-weight: 500; font-size: var(--s4); line-h
 .stream.right { justify-self: center; }
 .stream.att { outline-color: rgba(255, 255, 255, 0.75); }
 .stream .cue { color: #FFE08A; }
-.fix { font-size: clamp(1.5rem, 4.5vw, 2.5rem); font-weight: 700; padding: 0 12%; }
+.fix { font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 700; padding: 0 12%; }
 .resp {
   position: absolute; left: 50%; bottom: 10%; transform: translateX(-50%);
-  font-family: var(--mono); font-size: var(--s1); padding: 3px 10px; border-radius: 4px;
+  font-family: var(--body); font-size: var(--s1); padding: 3px 10px; border-radius: 4px;
   background: rgba(0, 0, 0, 0.35); color: #FFFFFF; white-space: nowrap;
 }
-.rsvp-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; font-family: var(--mono); font-size: var(--s1); }
-.phase { color: var(--ink); min-width: 15ch; }
+.rsvp-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; font-size: var(--s1); font-variant-numeric: tabular-nums; }
+.phase { color: var(--ink); font-weight: 600; min-width: 15ch; }
 .trial { color: var(--muted); flex: 1 1 auto; }
 .play {
-  font: inherit; padding: 4px 12px; border-radius: 4px; cursor: pointer;
+  font: inherit; padding: 3px 12px; border-radius: 4px; cursor: pointer;
   border: 1px solid var(--rule); background: var(--surface); color: var(--ink);
 }
 .play:hover { border-color: var(--accent); }
 .rsvp figcaption { font-size: var(--s1); color: var(--muted); line-height: 1.5; max-width: 66ch; }
 
-/* research threads */
-.thread { display: grid; gap: 20px; padding-top: 28px; border-top: 1px solid var(--rule); }
+/* ---------- research ---------- */
+.era { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 72px 0 14px; }
+.rmap { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 40px; }
+.rmap .era { margin: 0 0 8px; }
+.rmap ol { list-style: none; margin: 0; padding: 0; display: grid; }
+.rmap li { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); gap: 8px; padding: 10px 0; border-top: 1px solid var(--rule); }
+.rmap li:last-child { border-bottom: 1px solid var(--rule); }
+.rmap a { font-size: var(--s2); font-weight: 600; color: var(--ink); text-decoration: none; }
+.rmap a:hover { color: var(--accent); text-decoration: underline; }
+.rmap .v { display: block; font-size: var(--s1); color: var(--muted); line-height: 1.5; }
+.n { font-size: var(--s2); font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+.thread h3 .n { font-family: var(--body); margin-right: 10px; }
+
+.thread { display: grid; gap: 20px; padding-top: 24px; border-top: 1px solid var(--rule); scroll-margin-top: 24px; }
 .thread + .thread { margin-top: 56px; }
-.meta { font-family: var(--mono); font-size: var(--s1); color: var(--muted); margin: 6px 0 0; }
+.meta { font-size: var(--s1); color: var(--muted); margin: 6px 0 0; }
 .projects { display: grid; gap: 16px; }
-.project { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 22px 24px; display: grid; gap: 10px; min-width: 0; }
-.project h4 { margin: 0; font-size: var(--s3); font-weight: 600; line-height: 1.4; }
+.project { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 22px 24px; display: grid; gap: 12px; min-width: 0; scroll-margin-top: 24px; }
+.project h4 { margin: 0; font-family: var(--display); font-size: 1.1875rem; font-weight: 500; line-height: 1.35; }
 .project p { margin: 0; font-size: var(--s2); }
-.tag { display: inline-block; font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; background: var(--accent-soft); color: var(--accent); }
-.tag.gold { background: var(--gold-soft); color: var(--gold); }
+.project .meta { margin: -6px 0 0; }
+.tag { display: inline-block; font-size: 0.75rem; font-weight: 500; line-height: 1.6; padding: 0 8px; border-radius: 4px; background: var(--tint); color: var(--muted); }
+.tag.em { background: var(--accent-soft); color: var(--accent); }
 .tagrow { display: flex; flex-wrap: wrap; gap: 6px; }
-.facts { display: flex; flex-wrap: wrap; gap: 6px 20px; font-family: var(--mono); font-size: var(--s1); color: var(--muted); margin: 0; padding: 0; list-style: none; }
-.facts b { color: var(--ink); font-weight: 500; }
-.exp { display: grid; gap: 12px; padding-top: 18px; margin-top: 4px; border-top: 1px solid var(--rule); scroll-margin-top: 24px; }
+
+/* "Show details" toggles: a card shows its question, summary and figure; method details open on request */
+.more { border-top: 1px solid var(--rule); padding-top: 12px; }
+.more > summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 8px; font-size: var(--s2); font-weight: 600; color: var(--accent); }
+.more > summary::-webkit-details-marker { display: none; }
+.more > summary::before { content: "+"; display: inline-grid; place-items: center; width: 18px; height: 18px; border: 1px solid currentColor; border-radius: 4px; font-size: 0.875rem; line-height: 1; }
+.more[open] > summary::before { content: "\2212"; }
+.more > summary:hover { text-decoration: underline; text-underline-offset: 3px; }
+.more-body { display: grid; gap: 14px; margin-top: 14px; }
+
+.exp { display: grid; gap: 12px; padding-top: 14px; border-top: 1px solid var(--rule); scroll-margin-top: 24px; }
+.more-body > .exp:first-child { padding-top: 0; border-top: 0; }
 .exp h5 { margin: 0; font-size: var(--s2); font-weight: 600; line-height: 1.4; }
-.exp h5 span { display: block; margin-top: 2px; font-family: var(--mono); font-size: var(--s1); font-weight: 400; color: var(--muted); }
-.project .meta { margin: -4px 0 0; font-size: var(--s1); }
+.exp h5 span { display: block; margin-top: 2px; font-size: var(--s1); font-weight: 400; color: var(--muted); }
 .spec { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 10px 16px; margin: 0; font-size: var(--s2); }
-.spec dt { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.spec dt { font-size: var(--s1); font-weight: 600; color: var(--muted); padding-top: 2px; }
 .spec dd { margin: 0; }
 .matrix { border-collapse: collapse; font-size: var(--s1); margin-top: 10px; width: 100%; max-width: 26rem; }
 .matrix caption { caption-side: bottom; text-align: left; color: var(--muted); padding-top: 6px; line-height: 1.5; }
 .matrix th, .matrix td { border: 1px solid var(--rule); padding: 5px 10px; text-align: left; font-weight: 400; }
-.matrix th { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.matrix th { font-weight: 600; color: var(--muted); }
 .matrix thead td { border: 0; }
 .matrix td.same { background: var(--accent-soft); color: var(--accent); font-weight: 500; }
 
@@ -197,7 +221,7 @@ h3 { font-family: var(--display); font-weight: 500; font-size: var(--s4); line-h
 .frames { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .frame { display: grid; gap: 6px; align-content: start; }
 .frame svg { display: block; width: 100%; height: auto; background: var(--screen); border: 4px solid var(--screen-edge); border-radius: 6px; }
-.frame span { font-family: var(--mono); font-size: 0.6875rem; line-height: 1.4; color: var(--muted); }
+.frame span { font-size: 0.75rem; line-height: 1.4; color: var(--muted); }
 .frame .y { fill: var(--stim-yellow); }
 .frame .b { fill: var(--stim-blue); }
 .frame .start { stroke: var(--stim-ink); stroke-width: 4; }
@@ -211,37 +235,22 @@ h3 { font-family: var(--display); font-weight: 500; font-size: var(--s4); line-h
 .stages li { position: relative; padding: 12px 14px 12px 0; border-top: 2px solid var(--accent); counter-increment: st; font-size: var(--s1); color: var(--muted); }
 .stages li + li { padding-left: 14px; border-left: 1px solid var(--rule); }
 .stages strong { display: block; color: var(--ink); font-size: var(--s2); font-weight: 600; margin-bottom: 2px; }
-.stages strong::before { content: counter(st) " · "; font-family: var(--mono); font-weight: 400; color: var(--accent); }
+.stages strong::before { content: counter(st) ". "; color: var(--accent); }
 
 .timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
 .timeline li { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--rule); }
 .timeline li:first-child { border-top: 1px solid var(--rule); }
-.timeline .when { font-family: var(--mono); font-size: var(--s1); color: var(--muted); padding-top: 2px; font-variant-numeric: tabular-nums; }
+.timeline .when { font-size: var(--s1); color: var(--muted); padding-top: 2px; font-variant-numeric: tabular-nums; }
 .timeline h4 { margin: 0 0 4px; font-size: var(--s2); font-weight: 600; }
 .timeline p { margin: 0; font-size: var(--s2); color: var(--muted); }
 .timeline p a { white-space: nowrap; }
 
-/* research map and the Now / Before labels */
-.era { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 80px 0 14px; }
-.rmap { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 40px; }
-.rmap .era { margin: 0 0 8px; }
-.rmap ol { list-style: none; margin: 0; padding: 0; display: grid; }
-.rmap li { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); gap: 8px; padding: 10px 0; border-top: 1px solid var(--rule); }
-.rmap li:last-child { border-bottom: 1px solid var(--rule); }
-.rmap a { font-size: var(--s2); font-weight: 600; color: var(--ink); text-decoration: none; }
-.rmap a:hover { color: var(--accent); text-decoration: underline; }
-.rmap .v { display: block; font-size: var(--s1); color: var(--muted); line-height: 1.5; }
-.n { font-family: var(--mono); font-size: var(--s1); font-weight: 400; color: var(--accent); font-variant-numeric: tabular-nums; }
-.rmap .n { padding-top: 3px; }
-.thread h3 .n { margin-right: 12px; vertical-align: 0.2em; }
-.thread { scroll-margin-top: 24px; }
-
-/* insomnia studies: text beside a figure from the paper */
+/* insomnia studies: text, then a figure from the paper */
 .subq { font-family: var(--display); font-weight: 500; font-size: 1.125rem; margin: 12px 0 -8px; }
 .studies { list-style: none; margin: 0; padding: 0; display: grid; }
 .study { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; padding: 20px 0; border-top: 1px solid var(--rule); align-items: start; scroll-margin-top: 24px; }
 .study:last-child { border-bottom: 1px solid var(--rule); }
-.study .when { margin: 0 0 4px; font-family: var(--mono); font-size: var(--s1); color: var(--muted); }
+.study .when { margin: 0 0 4px; font-size: var(--s1); color: var(--muted); }
 .study h5 { margin: 0 0 6px; font-size: var(--s2); font-weight: 600; line-height: 1.4; }
 .study p { margin: 0; font-size: var(--s2); max-width: 66ch; }
 .pfig { margin: 0; display: grid; gap: 6px; max-width: 680px; }
@@ -250,83 +259,82 @@ h3 { font-family: var(--display); font-weight: 500; font-size: var(--s4); line-h
 .pfig a:hover { border-color: var(--accent); }
 .pfig img { display: block; width: 100%; height: auto; }
 .pfig figcaption { font-size: var(--s1); color: var(--muted); line-height: 1.5; }
-.lede.tail { margin: 16px 0 0; }
 
-/* publications */
+/* ---------- publications ---------- */
+.subhead { margin: 0 0 16px; }
+.subhead.next { margin-top: 48px; }
 .pubs { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
-.pub { display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: 20px; padding: 24px 0; border-top: 1px solid var(--rule); }
+.pub { display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: 20px; padding: 22px 0; border-top: 1px solid var(--rule); scroll-margin-top: 24px; }
 .pub:last-child { border-bottom: 1px solid var(--rule); }
-.pub .yr { font-family: var(--display); font-size: var(--s4); color: var(--muted); line-height: 1.2; font-variant-numeric: tabular-nums; }
-.pub h3 { font-size: 1.25rem; margin-bottom: 6px; }
-.pub h3 a { color: var(--ink); text-decoration: none; }
-.pub h3 a:hover { color: var(--accent); text-decoration: underline; }
+.pub .yr { font-size: var(--s2); font-weight: 600; color: var(--muted); padding-top: 3px; font-variant-numeric: tabular-nums; }
+.pub h4 { font-family: var(--display); font-weight: 500; font-size: 1.1875rem; line-height: 1.35; margin: 0 0 6px; }
+.pub h4 a { color: var(--ink); text-decoration: none; }
+.pub h4 a:hover { color: var(--accent); text-decoration: underline; }
 .authors { margin: 0; font-size: var(--s2); color: var(--muted); }
 .authors b { color: var(--ink); font-weight: 600; }
 .venue { margin: 2px 0 0; font-size: var(--s2); }
 .venue i { font-family: var(--display); font-size: 1.05em; }
-.finding { margin: 10px 0 0; font-size: var(--s2); max-width: 66ch; }
-.links { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-family: var(--mono); font-size: var(--s1); align-items: center; }
+.links { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 10px; font-size: var(--s1); align-items: center; }
 
-/* "My part" lines: what Holland did on a shared project */
+/* "My part", "Question" and "Shows" lines */
 p.role { margin: 8px 0 0; font-size: var(--s2); color: var(--muted); max-width: 66ch; }
-p.ask { font-weight: 500; }
-p.role .k, p.ask .k { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+p.ask { color: var(--ink); }
+p.role .k, p.ask .k { font-weight: 600; color: var(--ink); margin-right: 6px; }
+p.role .k::after, p.ask .k::after { content: ":"; }
 
 /* posters */
 .posters { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
 .posters li { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 20px; padding: 16px 0; border-top: 1px solid var(--rule); }
 .posters li:last-child { border-bottom: 1px solid var(--rule); }
-.posters .when { font-family: var(--mono); font-size: var(--s1); color: var(--muted); padding-top: 3px; display: grid; gap: 6px; align-content: start; justify-items: start; }
+.posters .when { font-size: var(--s1); color: var(--muted); padding-top: 3px; display: grid; gap: 6px; align-content: start; justify-items: start; font-variant-numeric: tabular-nums; }
 .posters .t { margin: 0; font-style: italic; font-family: var(--display); font-size: 1.125rem; line-height: 1.35; }
 .posters .a { margin: 4px 0 0; font-size: var(--s2); color: var(--muted); }
 .posters .a b { color: var(--ink); font-weight: 600; }
 
-/* CV grid */
-.cvgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 56px; }
+/* ---------- CV ---------- */
+.cvgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 44px 56px; }
 .cvgrid > div { min-width: 0; }
-.cvgrid h3 { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 14px; }
+.cvgrid h3 { font-size: 1.125rem; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
 .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; font-size: var(--s2); }
 .list li { display: grid; gap: 1px; }
 .list .k { font-weight: 600; }
 .list .v { color: var(--muted); }
-.list .d { font-family: var(--mono); font-size: var(--s1); color: var(--muted); font-variant-numeric: tabular-nums; }
+.list .d { font-size: var(--s1); color: var(--muted); font-variant-numeric: tabular-nums; }
 .list .sub { margin: 4px 0 2px; padding-left: 1.1em; display: grid; gap: 3px; color: var(--muted); }
 .list .sub li { display: list-item; }
 .wide { grid-column: 1 / -1; }
 .wide .list { max-width: 72ch; }
-.lede { margin: -12px 0 24px; max-width: 66ch; font-size: var(--s2); color: var(--muted); }
-.cvpdf { margin: -12px 0 32px; font-family: var(--mono); font-size: var(--s1); }
+.cvpdf { margin: -8px 0 32px; font-size: var(--s2); }
 .skills { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 10px 20px; margin: 0; font-size: var(--s2); }
 .skills dt { font-weight: 600; }
 .skills dd { margin: 0; color: var(--muted); }
 
-footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); padding-top: 24px; border-top: 1px solid var(--rule); display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+footer { font-size: var(--s1); color: var(--muted); padding-top: 24px; border-top: 1px solid var(--rule); display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
 
 /* ---------- narrow screens ---------- */
 @media (max-width: 900px) {
-  .wrap { grid-template-columns: minmax(0, 1fr); gap: 48px; padding-block: 32px 32px; }
+  .wrap { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-block: 32px 32px; }
   .side { position: static; grid-template-columns: auto minmax(0, 1fr); gap: 18px 20px; align-items: center; }
-  .mono-mark { width: 64px; height: 64px; font-size: 1.5rem; }
+  .mono-mark { width: 72px; height: 72px; }
   .side nav, .contact { grid-column: 1 / -1; }
   .side nav ul { border-left: 0; display: flex; flex-wrap: wrap; gap: 6px; }
   .side nav a { border: 1px solid var(--rule); border-radius: 999px; padding: 3px 12px; margin: 0; background: var(--surface); font-size: var(--s1); }
   .side nav a:hover, .side nav a.on { border-color: var(--accent); }
   .contact { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-  main { gap: 64px; }
+  main > section { padding-block: 44px; }
 }
 @media (max-width: 640px) {
-  :root { --s5: 1.625rem; --s6: 2rem; }
-  .cvgrid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  :root { --s5: 1.5rem; --s6: 1.75rem; }
+  .cvgrid { grid-template-columns: minmax(0, 1fr); gap: 36px; }
   .stages { grid-template-columns: minmax(0, 1fr); }
   .stages li + li { padding-left: 0; border-left: 0; }
-  .timeline li, .posters li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
-  .pub { grid-template-columns: minmax(0, 1fr); gap: 4px; }
-  .pub .yr { font-size: var(--s3); }
+  .timeline li, .posters li, .news li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .pub { grid-template-columns: minmax(0, 1fr); gap: 2px; }
   .skills { grid-template-columns: minmax(0, 1fr); gap: 2px; }
   .skills dd { margin-bottom: 10px; }
   .frames { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .rmap { grid-template-columns: minmax(0, 1fr); gap: 20px; }
-  .era { margin-top: 56px; }
+  .era { margin-top: 52px; }
   .spec { grid-template-columns: minmax(0, 1fr); gap: 2px; }
   .spec dd { margin-bottom: 10px; }
   .project { padding: 18px; }
@@ -335,7 +343,7 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
 
 <div class="wrap">
   <aside class="side">
-    <img class="mono-mark" src="assets/holland-sun.jpg" alt="Portrait of Haonan (Holland) Sun" width="88" height="88">
+    <img class="mono-mark" src="assets/holland-sun.jpg" alt="Portrait of Haonan (Holland) Sun" width="112" height="112">
     <div class="who">
       <h1>Haonan (Holland) Sun</h1>
       <p>M.S. student in Psychology<br>Wake Forest University</p>
@@ -343,9 +351,9 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
     <nav aria-label="Sections">
       <ul>
         <li><a href="#about">About</a></li>
+        <li><a href="#news">News</a></li>
         <li><a href="#research">Research</a></li>
         <li><a href="#publications">Publications</a></li>
-        <li><a href="#presentations">Presentations</a></li>
         <li><a href="#cv">CV</a></li>
       </ul>
     </nav>
@@ -356,12 +364,12 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
         <button class="copy" id="copyEmail" type="button">Copy</button>
       </div>
       <div class="row">
-        <span class="lbl">Code</span>
-        <a href="https://github.com/HollandSun" target="_blank" rel="noopener">github.com/HollandSun</a>
-      </div>
-      <div class="row">
         <span class="lbl">CV</span>
         <a href="assets/Haonan-Sun-CV.pdf" target="_blank" rel="noopener">Download PDF</a>
+      </div>
+      <div class="row">
+        <span class="lbl">GitHub</span>
+        <a href="https://github.com/HollandSun" target="_blank" rel="noopener">github.com/HollandSun</a>
       </div>
       <div class="row">
         <span class="lbl">Based in</span>
@@ -372,48 +380,42 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
 
   <main>
     <!-- ABOUT -->
-    <section id="about" class="hero">
-      <div>
-        <p class="eyebrow">Attention · Memory · Cognitive control</p>
-        <p class="thesis">How what we have <em>learned</em> shapes what we attend to, perceive and remember.</p>
-      </div>
 
-      <figure class="rsvp">
-        <div class="monitor">
-          <div class="screen" id="screen" role="img" aria-label="Example RSVP display: a digit stream on each side of a central fixation cross. A letter cue in the attended stream signals whether to hold attention there or shift to the other stream.">
-            <div class="stream left" id="sL"><span>7</span></div>
-            <div class="fix" id="fx">+</div>
-            <div class="stream right att" id="sR"><span class="cue">L</span></div>
-            <div class="resp" id="resp" hidden></div>
-          </div>
-        </div>
-        <div class="rsvp-bar">
-          <span class="phase" id="phase">Shift cue · 250 ms</span>
-          <span class="trial" id="trial">Attending right · cue says L</span>
-          <button class="play" id="play" type="button" aria-pressed="false">Play</button>
-        </div>
-        <figcaption>The letter-cue RSVP task from <a href="#exp1">Experiment&nbsp;1</a> of my current project, adapted from Sali, Anderson and Yantis (2015). Two digit streams update every 250&nbsp;ms. A letter in the attended stream (dashed outline) names the side to attend next: the same side means hold, the other side means shift. The participant then judges whether the digit in that stream is odd or even. Blocks that are mostly-shift or mostly-hold teach people how ready to be to move attention. The demo runs at half speed.</figcaption>
-      </figure>
-
+    <section id="about" class="intro">
+      <p class="statement">How what we have <em>learned</em> shapes what we attend to, perceive and remember.</p>
       <div class="prose">
-        <p>I am a Master's student in Psychology at Wake Forest University, advised by <a href="https://psychology.wfu.edu/anthony-sali/" target="_blank" rel="noopener">Dr. Anthony Sali</a>. Broadly, I am interested in how prior learning and ongoing input from the environment shape the way information is selected, processed and represented, and how the brain carries this out. My current work looks at one case. People learn how ready to be to shift attention, and I ask what that learned state changes. Is memory better when the state at test matches the state at study? And which stage of a shift does the state change? So far, memory was better when the state matched, but only for pictures first seen early in learning. My thesis takes on the second question. With <a href="https://psychology.wfu.edu/stefon-van-noordt/" target="_blank" rel="noopener">Dr. Stefon van Noordt</a>, I am also analyzing EEG to see how medial-frontal theta during cognitive control differs in early-phase psychosis.</p>
+        <p>I am a Master's student in Psychology at Wake Forest University, advised by <a href="https://psychology.wfu.edu/anthony-sali/" target="_blank" rel="noopener">Dr. Anthony Sali</a>. Broadly, I am interested in how prior learning and ongoing input from the environment shape the way information is selected, processed and represented, and how the brain carries this out.</p>
+        <p>My current work looks at one case. People learn how ready to be to shift attention, and I ask what that learned state changes. Is memory better when the state at test matches the state at study? And which stage of a shift does the state change? So far, memory was better when the state matched, but only for pictures first seen early in learning. My thesis takes on the second question. With <a href="https://psychology.wfu.edu/stefon-van-noordt/" target="_blank" rel="noopener">Dr. Stefon van Noordt</a>, I am also analyzing EEG to see how medial-frontal theta during cognitive control differs in early-phase psychosis.</p>
         <p>Before Wake Forest, I spent three years at the Sleep and NeuroImaging Center at Southwest University in Chongqing, China (PI: <a href="http://www.leixulab.net/lei.asp" target="_blank" rel="noopener">Prof. Xu Lei</a>), first as an undergraduate researcher and then as lab coordinator. There I used structural and functional MRI, machine learning and brain transcriptomics to identify biologically grounded subtypes of insomnia disorder, and ran data collection at four hospitals for a national insomnia project.</p>
-        <p>I will finish my M.S. in May 2027 and am applying to PhD programs for Fall 2027.</p>
-        <ul class="chips" aria-label="Research interests">
-          <li>Attentional flexibility</li>
-          <li>Encoding specificity</li>
-          <li>Spatial attention</li>
-          <li>Cognitive control</li>
-          <li>Insomnia heterogeneity</li>
-          <li>MRI &amp; machine learning</li>
-        </ul>
+        <p class="status">I will finish my M.S. in May 2027 and am applying to PhD programs for Fall 2027.</p>
       </div>
+      <ul class="chips" aria-label="Research interests">
+        <li>Attentional flexibility</li>
+        <li>Encoding specificity</li>
+        <li>Spatial attention</li>
+        <li>Cognitive control</li>
+        <li>Insomnia heterogeneity</li>
+        <li>MRI &amp; machine learning</li>
+      </ul>
+    </section>
+
+    <!-- NEWS -->
+    <section id="news">
+      <h2>News</h2>
+      <ul class="news">
+        <li><span class="d">Nov 2026</span><span>Presenting <a href="#exp2">Experiment 2</a> at OPAM in San Diego: memory was better when the attentional state matched, for pictures first seen early in learning.</span></li>
+        <li><span class="d">Fall 2026</span><span>Applying to PhD programs for Fall 2027.</span></li>
+        <li><span class="d">Jun 2026</span><span>Started my <a href="#thesis">master's thesis</a> on which stage of an attention shift learned flexibility changes.</span></li>
+        <li><span class="d">Apr 2026</span><span>Poster on Experiments 1 and 2 at the Wake Forest Psychology Department Poster Session.</span></li>
+        <li><span class="d">Mar 2026</span><span>Poster on <a href="#exp1">Experiment 1</a> at the North Carolina Conference on Cognition, Duke University.</span></li>
+        <li><span class="d">Fall 2025</span><span>Started the M.S. in Psychology at Wake Forest University, advised by Dr. Anthony Sali.</span></li>
+        <li><span class="d">2025</span><span>Two papers out on insomnia: <a href="#pub-hbm">subtypes from cortical networks</a> in Human Brain Mapping, and <a href="#pub-pnp">gene expression and brain function</a> in PNP&amp;BP.</span></li>
+      </ul>
     </section>
 
     <!-- RESEARCH -->
     <section id="research">
-      <p class="eyebrow">Research</p>
-      <h2>Four lines of work</h2>
+      <h2>Research</h2>
       <p class="lede">At Wake Forest I study attentional control: how people learn how ready to be to shift attention, what that learned state changes, and how control shows up in the EEG. Before that, at Southwest University, I used MRI and machine learning to study why patients with the same insomnia diagnosis differ.</p>
 
       <div class="rmap">
@@ -449,48 +451,70 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
             <h4>Attentional flexibility as an internal encoding context for explicit and implicit memory</h4>
             <p class="ask"><span class="k">Question 1</span>Is memory better when the attentional state at test matches the one at study?</p>
             <p>Memory is better when the context at retrieval matches the context at encoding (Tulving &amp; Thomson, 1973). This holds for external settings, such as learning on land or underwater, and for internal states, such as being sober or intoxicated. I ask whether a learned attentional state can serve as that context: is memory better when the shift-or-hold state at retrieval matches the state at encoding?</p>
+            <p class="ask"><span class="k">Result so far</span>In Experiment 2 (N = 42), repeated pictures were handled about 45&nbsp;ms faster when the block type matched, but only pictures first seen early in an encoding block showed this benefit.</p>
+            <figure class="rsvp">
+              <div class="monitor">
+                <div class="screen" id="screen" role="img" aria-label="Example RSVP display: a digit stream on each side of a central fixation cross. A letter cue in the attended stream signals whether to hold attention there or shift to the other stream.">
+                  <div class="stream left" id="sL"><span>7</span></div>
+                  <div class="fix" id="fx">+</div>
+                  <div class="stream right att" id="sR"><span class="cue">L</span></div>
+                  <div class="resp" id="resp" hidden></div>
+                </div>
+              </div>
+              <div class="rsvp-bar">
+                <span class="phase" id="phase">Shift cue · 250 ms</span>
+                <span class="trial" id="trial">Attending right · cue says L</span>
+                <button class="play" id="play" type="button" aria-pressed="false">Play</button>
+              </div>
+              <figcaption>The letter-cue RSVP task from Experiment&nbsp;1, adapted from Sali, Anderson and Yantis (2015). Two digit streams update every 250&nbsp;ms. A letter in the attended stream (dashed outline) names the side to attend next: the same side means hold, the other side means shift. The participant then judges whether the digit in that stream is odd or even. Blocks that are mostly-shift or mostly-hold teach people how ready to be to move attention. The demo runs at half speed.</figcaption>
+            </figure>
             <p>I designed both experiments, programmed them in MATLAB with Psychtoolbox, obtained IRB approval, ran the participants, and analyzed the data in R with (generalized) linear mixed-effects models and repeated-measures ANOVA.</p>
 
-            <div class="exp" id="exp1">
-              <h5>Experiment 1 · Explicit memory<span>N = 21 · presented at NCCC, March 2026</span></h5>
-              <dl class="spec">
-                <dt>Task</dt>
-                <dd>The letter-cue RSVP task at the top of this page. Four blocks of 60 trials, two mostly-shift and two mostly-hold. On 15 trials per block a word followed the attention trial. Words were studied in the first two blocks and tested with a two-choice recognition test in the last two.</dd>
-                <dt>Design</dt>
-                <dd>Mixed. Participants were tested either in the same block type they had studied in (congruent group) or in the other one (incongruent group).</dd>
-                <dt>Result</dt>
-                <dd>People learned the block regularity. In mostly-hold blocks, shift trials were about 200&nbsp;ms slower than hold trials; in mostly-shift blocks the two did not differ. Recognition accuracy did not depend on whether the state matched.</dd>
-                <dt>Next</dt>
-                <dd>Few memory trials per condition survived screening, so a small effect could have been missed. Experiment 2 moved to a within-subject design and a continuous measure.</dd>
-              </dl>
-            </div>
+            <details class="more">
+              <summary>Experiments 1 and 2: task, design and results</summary>
+              <div class="more-body">
+                <div class="exp" id="exp1">
+                  <h5>Experiment 1 · Explicit memory<span>N = 21 · presented at NCCC, March 2026</span></h5>
+                  <dl class="spec">
+                    <dt>Task</dt>
+                    <dd>The letter-cue RSVP task at the top of this page. Four blocks of 60 trials, two mostly-shift and two mostly-hold. On 15 trials per block a word followed the attention trial. Words were studied in the first two blocks and tested with a two-choice recognition test in the last two.</dd>
+                    <dt>Design</dt>
+                    <dd>Mixed. Participants were tested either in the same block type they had studied in (congruent group) or in the other one (incongruent group).</dd>
+                    <dt>Result</dt>
+                    <dd>People learned the block regularity. In mostly-hold blocks, shift trials were about 200&nbsp;ms slower than hold trials; in mostly-shift blocks the two did not differ. Recognition accuracy did not depend on whether the state matched.</dd>
+                    <dt>Next</dt>
+                    <dd>Few memory trials per condition survived screening, so a small effect could have been missed. Experiment 2 moved to a within-subject design and a continuous measure.</dd>
+                  </dl>
+                </div>
 
-            <div class="exp" id="exp2">
-              <h5>Experiment 2 · Implicit memory<span>N = 42 · to be presented at OPAM, November 2026</span></h5>
-              <dl class="spec">
-                <dt>Task</dt>
-                <dd>The cue became a picture. Both streams showed phase-scrambled noise, and the cue was a degraded object image (20% image, 80% noise) in the attended stream: an animal meant shift, an inanimate object meant hold. Images came from the Konkle and Caramazza (2013) animacy-by-size set. Four blocks of 80 trials; mostly-shift blocks had 70% shift trials and mostly-hold blocks had 70% hold trials.</dd>
-                <dt>Design</dt>
-                <dd>Fully within-subject. The first two blocks, one of each type, were for encoding. 96 of their pictures came back as cues in the last two blocks, with the same meaning as before. Memory was measured implicitly, as response time on trials cued by a repeated picture.
-                  <table class="matrix">
-                    <caption>S = mostly-shift block, H = mostly-hold block. A repeated picture keeps its cue meaning; only the block type around it can change.</caption>
-                    <thead><tr><td></td><th scope="col">Retrieval in S</th><th scope="col">Retrieval in H</th></tr></thead>
-                    <tbody>
-                      <tr><th scope="row">Encoding in S</th><td class="same">Congruent</td><td>Incongruent</td></tr>
-                      <tr><th scope="row">Encoding in H</th><td>Incongruent</td><td class="same">Congruent</td></tr>
-                    </tbody>
-                  </table>
-                </dd>
-                <dt>Result</dt>
-                <dd>The shift cost was again smaller in mostly-shift blocks (about 60 vs 140&nbsp;ms at encoding), and the difference held at retrieval. Repeated pictures were handled faster when the block type matched. The benefit came from pictures first seen early in an encoding block, before performance leveled off, where it was about 45&nbsp;ms. Pictures first seen late in a block showed none.</dd>
-                <dt>Next</dt>
-                <dd>Two accounts fit this pattern. The state may bind more strongly to items met while the task is still being learned. Or an abstract context cue may help more after a longer delay, and early items waited longer before they came back. In this design, learning stage and delay move together, so the next step is to pull them apart.</dd>
-              </dl>
-            </div>
+                <div class="exp" id="exp2">
+                  <h5>Experiment 2 · Implicit memory<span>N = 42 · to be presented at OPAM, November 2026</span></h5>
+                  <dl class="spec">
+                    <dt>Task</dt>
+                    <dd>The cue became a picture. Both streams showed phase-scrambled noise, and the cue was a degraded object image (20% image, 80% noise) in the attended stream: an animal meant shift, an inanimate object meant hold. Images came from the Konkle and Caramazza (2013) animacy-by-size set. Four blocks of 80 trials; mostly-shift blocks had 70% shift trials and mostly-hold blocks had 70% hold trials.</dd>
+                    <dt>Design</dt>
+                    <dd>Fully within-subject. The first two blocks, one of each type, were for encoding. 96 of their pictures came back as cues in the last two blocks, with the same meaning as before. Memory was measured implicitly, as response time on trials cued by a repeated picture.
+                      <table class="matrix">
+                        <caption>S = mostly-shift block, H = mostly-hold block. A repeated picture keeps its cue meaning; only the block type around it can change.</caption>
+                        <thead><tr><td></td><th scope="col">Retrieval in S</th><th scope="col">Retrieval in H</th></tr></thead>
+                        <tbody>
+                          <tr><th scope="row">Encoding in S</th><td class="same">Congruent</td><td>Incongruent</td></tr>
+                          <tr><th scope="row">Encoding in H</th><td>Incongruent</td><td class="same">Congruent</td></tr>
+                        </tbody>
+                      </table>
+                    </dd>
+                    <dt>Result</dt>
+                    <dd>The shift cost was again smaller in mostly-shift blocks (about 60 vs 140&nbsp;ms at encoding), and the difference held at retrieval. Repeated pictures were handled faster when the block type matched. The benefit came from pictures first seen early in an encoding block, before performance leveled off, where it was about 45&nbsp;ms. Pictures first seen late in a block showed none.</dd>
+                    <dt>Next</dt>
+                    <dd>Two accounts fit this pattern. The state may bind more strongly to items met while the task is still being learned. Or an abstract context cue may help more after a longer delay, and early items waited longer before they came back. In this design, learning stage and delay move together, so the next step is to pull them apart.</dd>
+                  </dl>
+                </div>
+              </div>
+            </details>
             <div class="links"><a href="https://github.com/HollandSun/Attention-Memory-Test" target="_blank" rel="noopener">Experiment code on GitHub</a></div>
           </article>
           <article class="project" id="thesis">
-            <div class="tagrow"><span class="tag gold">Master's thesis · in progress</span><span class="tag">Jun 2026–present</span></div>
+            <div class="tagrow"><span class="tag em">Master's thesis · in progress</span><span class="tag">Jun 2026–present</span></div>
             <h4>The temporal dynamics of learned attentional flexibility: Investigating the role of disengagement</h4>
             <p class="meta">Committee: Dr. Anthony Sali, Dr. Janine Jennings, Dr. Stefon van Noordt</p>
             <p class="ask"><span class="k">Question 2</span>Which stage of an attention shift does the learned state change?</p>
@@ -500,8 +524,6 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
               <li><strong>Move</strong>Carry attention toward the new location.</li>
               <li><strong>Engage</strong>Settle attention on what is at the destination.</li>
             </ol>
-            <p>I treat disengagement in priority-map terms: it reduces the weight on the currently prioritized location. That way the account does not depend on attention sitting at only one place at a time.</p>
-
             <figure class="seq">
               <div class="frames">
                 <div class="frame">
@@ -524,16 +546,22 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
               <figcaption>One shift trial with incongruent targets, for a participant whose shift color is blue. The cue appears at the starting location on the right, so attention moves left, where the C opens up. The C on the right opens down and pulls toward the wrong answer.</figcaption>
             </figure>
 
-            <dl class="spec">
-              <dt>Task</dt>
-              <dd>A compelled-response task, borrowed from studies of urgent saccadic choice (Shankar et al., 2011). A thick outline marks the starting location, carried over from the previous trial. When it disappears, the clock starts, and the response has to get under way before the participant knows what it should be. After 1,350–1,950&nbsp;ms the starting circle turns blue or red, meaning shift or hold (counterbalanced), and a Landolt C appears in each circle. The participant reports whether the C at the to-be-attended location opens up or down, by 2,000&nbsp;ms after the go signal. That leaves 50–650&nbsp;ms after the cue. An eye tracker checks central fixation.</dd>
-              <dt>Design</dt>
-              <dd>Context × trial type × congruency, all within subject. Four mostly-shift blocks (70% shift) and four mostly-hold blocks (70% hold), 80 trials each: 640 trials in about 1.5 hours. On congruent trials the two Cs open the same way; on incongruent trials the C at the location to ignore points to the wrong answer. Planned N = 40, so that about 34 usable participants give 80% power for the key interaction.</dd>
-              <dt>Measure</dt>
-              <dd>Processing time is response time minus the gap: how long the cue had been on screen when the response came. Plotting accuracy against processing time gives a tachometric curve that climbs from chance to a ceiling. Its center point and rise time show when the cued C takes over the response, and how fast, separately for congruent and incongruent trials.</dd>
-              <dt>Prediction</dt>
-              <dd>If a mostly-shift context speeds disengagement, the C at the old location should stop interfering sooner on shift trials, so the congruency effect shrinks. On hold trials the same change should backfire: readiness to leave hands priority to the other location before the cue, so its C interferes more and the congruency effect grows. The key test is the context × trial type × congruency interaction on center point and rise time.</dd>
-            </dl>
+            <details class="more">
+              <summary>Task, design and predictions</summary>
+              <div class="more-body">
+                <p>I treat disengagement in priority-map terms: it reduces the weight on the currently prioritized location. That way the account does not depend on attention sitting at only one place at a time.</p>
+                <dl class="spec">
+                  <dt>Task</dt>
+                  <dd>A compelled-response task, borrowed from studies of urgent saccadic choice (Shankar et al., 2011). A thick outline marks the starting location, carried over from the previous trial. When it disappears, the clock starts, and the response has to get under way before the participant knows what it should be. After 1,350–1,950&nbsp;ms the starting circle turns blue or red, meaning shift or hold (counterbalanced), and a Landolt C appears in each circle. The participant reports whether the C at the to-be-attended location opens up or down, by 2,000&nbsp;ms after the go signal. That leaves 50–650&nbsp;ms after the cue. An eye tracker checks central fixation.</dd>
+                  <dt>Design</dt>
+                  <dd>Context × trial type × congruency, all within subject. Four mostly-shift blocks (70% shift) and four mostly-hold blocks (70% hold), 80 trials each: 640 trials in about 1.5 hours. On congruent trials the two Cs open the same way; on incongruent trials the C at the location to ignore points to the wrong answer. Planned N = 40, so that about 34 usable participants give 80% power for the key interaction.</dd>
+                  <dt>Measure</dt>
+                  <dd>Processing time is response time minus the gap: how long the cue had been on screen when the response came. Plotting accuracy against processing time gives a tachometric curve that climbs from chance to a ceiling. Its center point and rise time show when the cued C takes over the response, and how fast, separately for congruent and incongruent trials.</dd>
+                  <dt>Prediction</dt>
+                  <dd>If a mostly-shift context speeds disengagement, the C at the old location should stop interfering sooner on shift trials, so the congruency effect shrinks. On hold trials the same change should backfire: readiness to leave hands priority to the other location before the cue, so its C interferes more and the congruency effect grows. The key test is the context × trial type × congruency interaction on center point and rise time.</dd>
+                </dl>
+              </div>
+            </details>
           </article>
         </div>
       </div>
@@ -545,20 +573,25 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
         </div>
         <div class="projects">
           <article class="project" id="theta">
-            <div class="tagrow"><span class="tag gold">In progress</span><span class="tag">Collaboration</span></div>
+            <div class="tagrow"><span class="tag em">In progress</span><span class="tag">Collaboration</span></div>
             <h4>Medial-frontal theta during cognitive control in early-phase psychosis</h4>
             <p class="ask"><span class="k">Question</span>Does early-phase psychosis change medial-frontal theta during a cognitive-control task, and does a dose of caffeine change it?</p>
             <p>Medial-frontal theta (4–7&nbsp;Hz) is an EEG index of cognitive-control processing. This project re-analyzes EEG from Francis et al. (2025), who studied the P300 in the same recordings. Here the focus moves from that evoked response to theta-band activity.</p>
-            <dl class="spec">
-              <dt>Data</dt>
-              <dd>14 healthy controls and 11 people with early-phase psychosis, each recorded in a caffeine session and a placebo session.</dd>
-              <dt>Task</dt>
-              <dd>The AX-CPT. A cue letter is followed by a probe letter, and A followed by X is the frequent target. The other pairs (AY, BX, BY) are rarer. On BX trials the habitual response to X has to be withheld, so they matter most if enough clean trials remain.</dd>
-              <dt>Analysis</dt>
-              <dd>Wavelet time–frequency decomposition, then theta power over a medial-frontal cluster centered on Fz, measured after the cue and after the probe. The time window is set from the task timing and prior work, not from the group differences. Mixed-effects models test group, drug and their interaction, with age as a covariate.</dd>
-              <dt>Then</dt>
-              <dd>Exploratory tests of whether theta, or its change with caffeine, tracks accuracy and response time.</dd>
-            </dl>
+            <details class="more">
+              <summary>Data, task and analysis</summary>
+              <div class="more-body">
+                <dl class="spec">
+                  <dt>Data</dt>
+                  <dd>14 healthy controls and 11 people with early-phase psychosis, each recorded in a caffeine session and a placebo session.</dd>
+                  <dt>Task</dt>
+                  <dd>The AX-CPT. A cue letter is followed by a probe letter, and A followed by X is the frequent target. The other pairs (AY, BX, BY) are rarer. On BX trials the habitual response to X has to be withheld, so they matter most if enough clean trials remain.</dd>
+                  <dt>Analysis</dt>
+                  <dd>Wavelet time–frequency decomposition, then theta power over a medial-frontal cluster centered on Fz, measured after the cue and after the probe. The time window is set from the task timing and prior work, not from the group differences. Mixed-effects models test group, drug and their interaction, with age as a covariate.</dd>
+                  <dt>Then</dt>
+                  <dd>Exploratory tests of whether theta, or its change with caffeine, tracks accuracy and response time.</dd>
+                </dl>
+              </div>
+            </details>
             <p class="role"><span class="k">My part</span>The analysis, from checking the cleaned and segmented recordings through the time–frequency maps and scalp distributions to the statistical models.</p>
           </article>
         </div>
@@ -603,7 +636,7 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
           <li class="study" id="s-sustain">
             <div>
               <p class="when">2024–2025 · internal lab report</p>
-              <h5>Subtypes with progression stages <span class="tag gold">Project lead</span></h5>
+              <h5>Subtypes with progression stages <span class="tag em">Project lead</span></h5>
               <p>Applied SuStaIn to multimodal MRI (MIND networks, fALFF, ReHo, functional connectivity) to recover both subtypes and their disease stages, and mapped each trajectory to a sleep-EEG phenotype from portable forehead recordings.</p>
               <p class="role"><span class="k">My part</span>Designed the study and did all of the preprocessing. Built MIND networks from T1w MRI and the resting-state measures used as SuStaIn input, and wrote my own processing for the raw forehead EEG.</p>
             </div>
@@ -648,7 +681,7 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
           <li>
             <span class="when">2021–2023</span>
             <div>
-              <h4>Sleep, anxiety and depression during COVID-19 <span class="tag gold">Student PI</span></h4>
+              <h4>Sleep, anxiety and depression during COVID-19 <span class="tag em">Student PI</span></h4>
               <p>A funded longitudinal study of how anxiety and depression shape sleep quality over time, with rumination as a mediator and negative cognitive bias as a moderator. Advised by Dr. Yuan Liu.</p>
               <p class="role"><span class="k">My part</span>Wrote the proposal and won national undergraduate funding through a three-round review with an oral defense. Led four research assistants and fit longitudinal moderated mediation models in Mplus.</p>
             </div>
@@ -668,14 +701,14 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
 
     <!-- PUBLICATIONS -->
     <section id="publications">
-      <p class="eyebrow">Publications</p>
-      <h2>Peer-reviewed articles</h2>
+      <h2>Publications</h2>
+      <h3 class="subhead">Journal articles</h3>
       <p class="lede">All four come from the Sleep and NeuroImaging Center at Southwest University. I am second author on each and made the figures. The line under each paper says what else I did; a summary and one figure from each are under <a href="#r-insomnia">Research</a>.</p>
       <ol class="pubs" reversed>
         <li class="pub" id="pub-pnp">
           <span class="yr">2025</span>
           <div>
-            <h3><a href="https://doi.org/10.1016/j.pnpbp.2024.111209" target="_blank" rel="noopener">Gene expression is associated with brain function of insomnia disorder, rather than brain structure</a></h3>
+            <h4><a href="https://doi.org/10.1016/j.pnpbp.2024.111209" target="_blank" rel="noopener">Gene expression is associated with brain function of insomnia disorder, rather than brain structure</a></h4>
             <p class="authors">Zhang, H., <b>Sun, H.</b>, Li, J., Lv, Z., Tian, Y., &amp; Lei, X.</p>
             <p class="venue"><i>Progress in Neuro-Psychopharmacology and Biological Psychiatry</i>, 136, 111209</p>
             <div class="links"><a href="https://doi.org/10.1016/j.pnpbp.2024.111209" target="_blank" rel="noopener">doi:10.1016/j.pnpbp.2024.111209</a><a href="#s-genes">Summary and figure</a></div>
@@ -685,7 +718,7 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
         <li class="pub" id="pub-hbm">
           <span class="yr">2025</span>
           <div>
-            <h3><a href="https://doi.org/10.1002/hbm.70119" target="_blank" rel="noopener">Subtypes of insomnia disorder identified by cortical morphometric similarity network</a></h3>
+            <h4><a href="https://doi.org/10.1002/hbm.70119" target="_blank" rel="noopener">Subtypes of insomnia disorder identified by cortical morphometric similarity network</a></h4>
             <p class="authors">Zhang, H., <b>Sun, H.</b>, Li, J., &amp; Lei, X.</p>
             <p class="venue"><i>Human Brain Mapping</i>, 46(1), e70119</p>
             <div class="links"><a href="https://doi.org/10.1002/hbm.70119" target="_blank" rel="noopener">doi:10.1002/hbm.70119</a><span class="tag">Open access</span><a href="#s-msn">Summary and figure</a></div>
@@ -695,7 +728,7 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
         <li class="pub" id="pub-jpr">
           <span class="yr">2024</span>
           <div>
-            <h3><a href="https://doi.org/10.1016/j.jpsychires.2023.12.023" target="_blank" rel="noopener">Response inhibition impairment related to altered frontal-striatal functional connectivity in insomnia disorder: A pilot and non-clinical study</a></h3>
+            <h4><a href="https://doi.org/10.1016/j.jpsychires.2023.12.023" target="_blank" rel="noopener">Response inhibition impairment related to altered frontal-striatal functional connectivity in insomnia disorder: A pilot and non-clinical study</a></h4>
             <p class="authors">Zhang, H., <b>Sun, H.</b>, Li, J., Yang, J., Fan, Y., Jülich, S. T., &amp; Lei, X.</p>
             <p class="venue"><i>Journal of Psychiatric Research</i>, 170, 138–146</p>
             <div class="links"><a href="https://doi.org/10.1016/j.jpsychires.2023.12.023" target="_blank" rel="noopener">doi:10.1016/j.jpsychires.2023.12.023</a><a href="#s-inhibition">Summary and figure</a></div>
@@ -705,7 +738,7 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
         <li class="pub" id="pub-biopsych">
           <span class="yr">2023</span>
           <div>
-            <h3><a href="https://doi.org/10.1016/j.biopsycho.2023.108591" target="_blank" rel="noopener">Subtypes of insomnia revealed by the heterogeneity of neuroanatomical patterns: A structural MRI study</a></h3>
+            <h4><a href="https://doi.org/10.1016/j.biopsycho.2023.108591" target="_blank" rel="noopener">Subtypes of insomnia revealed by the heterogeneity of neuroanatomical patterns: A structural MRI study</a></h4>
             <p class="authors">Zhang, H., <b>Sun, H.</b>, Li, J., Fan, Y., Jülich, S. T., &amp; Lei, X.</p>
             <p class="venue"><i>Biological Psychology</i>, 180, 108591</p>
             <div class="links"><a href="https://doi.org/10.1016/j.biopsycho.2023.108591" target="_blank" rel="noopener">doi:10.1016/j.biopsycho.2023.108591</a><a href="#s-gmv">Summary and figure</a></div>
@@ -713,15 +746,11 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
           </div>
         </li>
       </ol>
-    </section>
 
-    <!-- PRESENTATIONS -->
-    <section id="presentations">
-      <p class="eyebrow">Presentations</p>
-      <h2>Posters</h2>
+      <h3 class="subhead next">Conference presentations</h3>
       <ol class="posters">
         <li>
-          <span class="when">Nov 2026<span class="tag gold">Upcoming</span></span>
+          <span class="when">Nov 2026<span class="tag em">Upcoming</span></span>
           <div>
             <p class="t">Attentional flexibility as an internal context: A temporally graded context-dependent priming effect</p>
             <p class="a"><b>Sun, H.</b>, Mu, B., &amp; Sali, A. W. · 34th Object Perception, Attention, &amp; Memory (OPAM), San Diego, CA</p>
@@ -765,9 +794,8 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
 
     <!-- CV -->
     <section id="cv">
-      <p class="eyebrow">Curriculum vitae</p>
-      <h2>Background</h2>
-      <p class="cvpdf"><a href="assets/Haonan-Sun-CV.pdf" target="_blank" rel="noopener">Full CV (PDF)</a></p>
+      <h2>CV</h2>
+      <p class="cvpdf"><a href="assets/Haonan-Sun-CV.pdf" target="_blank" rel="noopener">Download the full CV (PDF)</a></p>
       <div class="cvgrid">
         <div>
           <h3>Education</h3>
@@ -943,11 +971,38 @@ footer { font-family: var(--mono); font-size: var(--s1); color: var(--muted); pa
   function stop() {
     running = false; clearTimeout(timer); play.textContent = 'Play'; play.setAttribute('aria-pressed', 'false');
   }
-  play.addEventListener('click', function () { running ? stop() : start(); });
+  var userPaused = false;
+  play.addEventListener('click', function () {
+    if (running) { userPaused = true; stop(); } else { userPaused = false; start(); }
+  });
   document.addEventListener('visibilitychange', function () { if (document.hidden && running) stop(); });
 
+  // Autoplay while the demo is on screen, unless the visitor paused it or prefers less motion
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduce) setTimeout(start, 1200);
+  if (!reduce && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && !running && !userPaused && !document.hidden) start();
+        else if (!en.isIntersecting && running) stop();
+      });
+    }, { threshold: 0.5 }).observe(document.getElementById('screen'));
+  }
+
+  // Open a closed "show details" toggle when a link points inside it
+  function reveal(hash) {
+    if (!hash || hash.length < 2) return null;
+    var t = document.getElementById(decodeURIComponent(hash.slice(1)));
+    if (!t) return null;
+    for (var d = t.closest('details'); d; d = d.parentElement && d.parentElement.closest('details')) d.open = true;
+    return t;
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (a) reveal(a.getAttribute('href'));
+  });
+  window.addEventListener('hashchange', function () { reveal(location.hash); });
+  var first = reveal(location.hash);
+  if (first) first.scrollIntoView();
 })();
 </script>
 <!-- artifact:end -->
