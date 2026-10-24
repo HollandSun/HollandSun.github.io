@@ -127,6 +127,33 @@ h3 { font-family: var(--display); font-weight: 500; font-size: var(--s4); line-h
 .chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
 .chips li { font-size: var(--s1); padding: 3px 10px; border-radius: 999px; color: var(--ink); background: var(--tint); }
 
+/* Information flow under the opening statement: the world, attend, perceive, remember,
+   with what has been learned feeding back to attention */
+.flow { margin: 0; max-width: 680px; }
+.flow-stage { position: relative; padding-top: 22px; }
+.flow svg { display: block; width: 100%; height: auto; overflow: visible; }
+.flow .track { fill: none; stroke: var(--rule); stroke-width: 2; }
+.flow .loop { fill: none; stroke: var(--accent); stroke-width: 1.25; stroke-dasharray: 4 4; opacity: 0.7; }
+.flow .arrow { fill: var(--accent); }
+.flow .gate line { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; transition: stroke 200ms; }
+.flow .gate.on line { stroke: var(--accent); }
+.flow .node { fill: var(--paper); stroke: var(--muted); stroke-width: 1.5; transition: stroke 200ms, fill 200ms; }
+.flow .node.on { stroke: var(--accent); fill: var(--accent-soft); }
+.flow .mem rect { fill: var(--tint); stroke: var(--rule); transition: fill 300ms, stroke 300ms; }
+.flow .mem rect.on { fill: var(--accent); stroke: var(--accent); }
+.flow .p { fill: var(--muted); }
+.flow .p.sel, .flow .pulse { fill: var(--accent); }
+.flow-loop-label {
+  position: absolute; top: 0; left: 62.5%; transform: translateX(-50%); margin: 0; white-space: nowrap;
+  font-family: var(--display); font-style: italic; font-size: var(--s2); color: var(--accent);
+}
+.flow-labels { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; font-size: var(--s1); line-height: 1.35; }
+.flow-labels li { padding: 0 4px; }
+.flow-labels b { display: block; font-size: var(--s2); font-weight: 600; color: var(--ink); }
+.flow-labels span { color: var(--muted); }
+.play.flow-toggle { position: absolute; top: 0; right: 0; font-size: 0.75rem; padding: 1px 10px; color: var(--muted); }
+.play.flow-toggle:hover { color: var(--ink); }
+
 /* news */
 .news { list-style: none; margin: 0; padding: 0; display: grid; max-width: 72ch; }
 .news li { display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 16px; padding: 10px 0; border-top: 1px solid var(--rule); font-size: var(--s2); }
@@ -383,6 +410,29 @@ footer { font-size: var(--s1); color: var(--muted); padding-top: 24px; border-to
 
     <section id="about" class="intro">
       <p class="statement">How what we have <em>learned</em> shapes what we attend to, perceive and remember.</p>
+      <figure class="flow" id="flow">
+        <div class="flow-stage">
+          <p class="flow-loop-label" aria-hidden="true">what we have learned</p>
+          <svg viewBox="0 0 600 130" role="img" aria-labelledby="flowDesc">
+            <desc id="flowDesc">Diagram: input from the world streams in from the left, most of it from one part of the field. Attention lets only some of it through. What gets through is perceived and stored in memory, and what has been learned feeds back and moves attention toward where the input comes from.</desc>
+            <defs><marker id="flowArrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow" d="M0 0L8 4L0 8z"/></marker></defs>
+            <path class="track" d="M225 70H507"/>
+            <path class="loop" id="flowLoop" d="M525 48C505 -6 255 -6 234 12" marker-end="url(#flowArrow)"/>
+            <g class="gate"><line id="gTop" x1="225" y1="16" x2="225" y2="56"/><line id="gBot" x1="225" y1="84" x2="225" y2="124"/></g>
+            <circle class="node" cx="375" cy="70" r="15"/>
+            <g class="mem" transform="translate(507 52)"><rect class="on" x="0" y="0" width="10" height="10" rx="2"/><rect class="on" x="13" y="0" width="10" height="10" rx="2"/><rect class="on" x="26" y="0" width="10" height="10" rx="2"/><rect class="on" x="0" y="13" width="10" height="10" rx="2"/><rect x="13" y="13" width="10" height="10" rx="2"/><rect x="26" y="13" width="10" height="10" rx="2"/><rect x="0" y="26" width="10" height="10" rx="2"/><rect x="13" y="26" width="10" height="10" rx="2"/><rect x="26" y="26" width="10" height="10" rx="2"/></g>
+            <g id="flowDots"><circle class="p" cx="22" cy="46" r="3.5"/><circle class="p" cx="60" cy="60" r="3.5"/><circle class="p" cx="98" cy="38" r="3.5"/><circle class="p" cx="142" cy="55" r="3.5"/><circle class="p" cx="178" cy="98" r="3.5"/><circle class="p" cx="214" cy="34" r="3.5" opacity="0.4"/><circle class="p sel" cx="300" cy="70" r="3.5"/><circle class="p sel" cx="450" cy="70" r="5"/></g>
+            <circle class="pulse" id="flowPulse" r="4" opacity="0"/>
+          </svg>
+          <ol class="flow-labels">
+            <li><b>The world</b><span>ongoing input</span></li>
+            <li><b>Attend</b><span>select what matters</span></li>
+            <li><b>Perceive</b><span>process it</span></li>
+            <li><b>Remember</b><span>represent and keep it</span></li>
+          </ol>
+          <button class="play flow-toggle" id="flowToggle" type="button" aria-pressed="false">Play</button>
+        </div>
+      </figure>
       <div class="prose">
         <p>I am a Master's student in Psychology at Wake Forest University, advised by <a href="https://psychology.wfu.edu/anthony-sali/" target="_blank" rel="noopener">Dr. Anthony Sali</a>. Broadly, I am interested in how prior learning and ongoing input from the environment shape the way information is selected, processed and represented, and how the brain carries this out.</p>
         <p>My current work looks at one case. People learn how ready to be to shift attention, and I ask what that learned state changes. Is memory better when the state at test matches the state at study? And which stage of a shift does the state change? So far, memory was better when the state matched, but only for pictures first seen early in learning. My thesis takes on the second question. With <a href="https://psychology.wfu.edu/stefon-van-noordt/" target="_blank" rel="noopener">Dr. Stefon van Noordt</a>, I am also analyzing EEG to see how medial-frontal theta during cognitive control differs in early-phase psychosis.</p>
@@ -1003,6 +1053,114 @@ footer { font-size: var(--s1); color: var(--muted); padding-top: 24px; border-to
   window.addEventListener('hashchange', function () { reveal(location.hash); });
   var first = reveal(location.hash);
   if (first) first.scrollIntoView();
+})();
+// Information flow: input streams in, the gap in the gate (attention) lets some through,
+// it is perceived and stored, and every second stored item sends learning back that moves the gap
+// toward where most input comes from. When memory is full the field changes and attention learns again.
+(function () {
+  var fig = document.getElementById('flow');
+  if (!fig) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  var dotsG = document.getElementById('flowDots');
+  var gTop = document.getElementById('gTop'), gBot = document.getElementById('gBot');
+  var gate = fig.querySelector('.gate'), node = fig.querySelector('.node');
+  var cells = Array.prototype.slice.call(fig.querySelectorAll('.mem rect'));
+  var loop = document.getElementById('flowLoop'), pulse = document.getElementById('flowPulse');
+  var btn = document.getElementById('flowToggle');
+  var Y = 70, GATE = 225, PERC = 375, MEM = 507, SPEED = 90, GAP = 14, BAND = 18;
+  var gc = Y, gcTarget = Y, band = Y - BAND, stored = 0, dots = [], spawnT = 0, pulseT = -1, resetT = -1;
+  var running = false, primed = false, userPaused = false, raf = 0, last = 0;
+  var loopLen = loop.getTotalLength();
+
+  function flash(el, ms) { el.classList.add('on'); setTimeout(function () { el.classList.remove('on'); }, ms); }
+  function spawn() {
+    var c = document.createElementNS(NS, 'circle');
+    c.setAttribute('class', 'p'); c.setAttribute('r', '3.5');
+    dotsG.appendChild(c);
+    // Most input comes from one band of the field; the rest is scattered
+    var y = Math.random() < 0.7 ? band + (Math.random() + Math.random() - 1) * 18 : Y + (Math.random() * 2 - 1) * 50;
+    dots.push({ el: c, x: -4, y: y, stage: 'in', a: 1 });
+  }
+  function store() {
+    if (stored < cells.length) cells[stored].classList.add('on');
+    stored++;
+    if (stored % 2 === 0 && stored < cells.length) pulseT = 0;
+    if (stored === cells.length) resetT = 2.4;
+  }
+  function tick(now) {
+    var dt = Math.min(0.05, (now - last) / 1000); last = now;
+    spawnT -= dt;
+    if (spawnT <= 0) { spawn(); spawnT = 0.35; }
+    gc += (gcTarget - gc) * Math.min(1, dt * 2.5);
+    gTop.setAttribute('y2', (gc - GAP).toFixed(1));
+    gBot.setAttribute('y1', (gc + GAP).toFixed(1));
+    for (var i = dots.length - 1; i >= 0; i--) {
+      var d = dots[i];
+      if (d.stage === 'out') {
+        d.a -= dt * 2.5;
+      } else {
+        d.x += SPEED * dt;
+        if (d.stage === 'in' && d.x >= GATE - 4) {
+          if (Math.abs(d.y - gc) < GAP - 3) { d.stage = 'sel'; d.el.setAttribute('class', 'p sel'); }
+          else { d.stage = 'out'; d.x = GATE - 5; }
+        }
+        if (d.stage === 'sel' || d.stage === 'seen') d.y += (Y - d.y) * Math.min(1, dt * 4);
+        if (d.stage === 'sel' && d.x >= PERC) { d.stage = 'seen'; d.el.setAttribute('r', '5'); flash(node, 300); }
+        if (d.stage === 'seen' && d.x >= MEM) { store(); d.a = 0; }
+      }
+      if (d.a <= 0) { dotsG.removeChild(d.el); dots.splice(i, 1); continue; }
+      d.el.setAttribute('cx', d.x.toFixed(1));
+      d.el.setAttribute('cy', d.y.toFixed(1));
+      d.el.setAttribute('opacity', d.a.toFixed(2));
+    }
+    if (pulseT >= 0) {
+      pulseT += dt / 1.1;
+      if (pulseT >= 1) {
+        pulseT = -1; pulse.setAttribute('opacity', '0');
+        gcTarget += (band - gcTarget) * 0.5; flash(gate, 500);
+      } else {
+        var pt = loop.getPointAtLength(pulseT * loopLen);
+        pulse.setAttribute('cx', pt.x.toFixed(1)); pulse.setAttribute('cy', pt.y.toFixed(1)); pulse.setAttribute('opacity', '1');
+      }
+    }
+    if (resetT >= 0) {
+      resetT -= dt;
+      if (resetT < 0) {
+        stored = 0; cells.forEach(function (c) { c.classList.remove('on'); });
+        band = band < Y ? Y + BAND : Y - BAND; gcTarget = Y;
+      }
+    }
+    raf = requestAnimationFrame(tick);
+  }
+  function start() {
+    if (running) return;
+    if (!primed) {
+      // Clear the still picture the first time it runs
+      primed = true;
+      while (dotsG.firstChild) dotsG.removeChild(dotsG.firstChild);
+      cells.forEach(function (c) { c.classList.remove('on'); });
+    }
+    running = true; last = performance.now(); raf = requestAnimationFrame(tick);
+    btn.textContent = 'Pause'; btn.setAttribute('aria-pressed', 'true');
+  }
+  function stop() {
+    running = false; cancelAnimationFrame(raf);
+    btn.textContent = 'Play'; btn.setAttribute('aria-pressed', 'false');
+  }
+  btn.addEventListener('click', function () {
+    if (running) { userPaused = true; stop(); } else { userPaused = false; start(); }
+  });
+
+  // Play while on screen, unless the visitor paused it or prefers less motion
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && !running && !userPaused) start();
+        else if (!en.isIntersecting && running) stop();
+      });
+    }, { threshold: 0.3 }).observe(fig);
+  }
 })();
 </script>
 <!-- artifact:end -->
