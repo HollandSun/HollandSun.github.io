@@ -127,14 +127,17 @@ h3 { font-family: var(--display); font-weight: 500; font-size: var(--s4); line-h
 .chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
 .chips li { font-size: var(--s1); padding: 3px 10px; border-radius: 999px; color: var(--ink); background: var(--tint); }
 
-/* Information flow under the opening statement: the world, attend, perceive, remember,
-   with what has been learned feeding back to attention */
+/* Information flow under the opening statement: the world, attend, perceive, remember.
+   The gate (attention) is steered from two sides: by what has been learned and by what stands out. */
 .flow { margin: 0; max-width: 680px; }
-.flow-stage { position: relative; padding-top: 22px; }
+.flow-stage { position: relative; padding-top: 24px; }
 .flow svg { display: block; width: 100%; height: auto; overflow: visible; }
 .flow .track { fill: none; stroke: var(--rule); stroke-width: 2; }
-.flow .loop { fill: none; stroke: var(--accent); stroke-width: 1.25; stroke-dasharray: 4 4; opacity: 0.7; }
+.flow .loop { fill: none; stroke-width: 1.25; stroke-dasharray: 4 4; }
+.flow .loop.learned { stroke: var(--accent); opacity: 0.7; }
+.flow .loop.salient { stroke: var(--muted); }
 .flow .arrow { fill: var(--accent); }
+.flow .arrow.salient { fill: var(--muted); }
 .flow .gate line { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; transition: stroke 200ms; }
 .flow .gate.on line { stroke: var(--accent); }
 .flow .node { fill: var(--paper); stroke: var(--muted); stroke-width: 1.5; transition: stroke 200ms, fill 200ms; }
@@ -142,17 +145,25 @@ h3 { font-family: var(--display); font-weight: 500; font-size: var(--s4); line-h
 .flow .mem rect { fill: var(--tint); stroke: var(--rule); transition: fill 300ms, stroke 300ms; }
 .flow .mem rect.on { fill: var(--accent); stroke: var(--accent); }
 .flow .p { fill: var(--muted); }
-.flow .p.sel, .flow .pulse { fill: var(--accent); }
-.flow-loop-label {
-  position: absolute; top: 0; left: 62.5%; transform: translateX(-50%); margin: 0; white-space: nowrap;
-  font-family: var(--display); font-style: italic; font-size: var(--s2); color: var(--accent);
+.flow .p.sal { fill: var(--paper); stroke: var(--ink); stroke-width: 2; }
+.flow .p.sel, .flow .pulse { fill: var(--accent); stroke: none; }
+.flow .pulse.salient { fill: var(--ink); }
+.flow .halo { fill: none; stroke: var(--ink); stroke-width: 1; }
+.flow-cue {
+  position: absolute; top: 0; transform: translateX(-50%); margin: 0; white-space: nowrap;
+  font-family: var(--display); font-style: italic; font-size: var(--s2);
 }
+.flow-cue.salient { left: 20.5%; color: var(--muted); }
+.flow-cue.learned { left: 62.5%; color: var(--accent); }
 .flow-labels { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; font-size: var(--s1); line-height: 1.35; }
 .flow-labels li { padding: 0 4px; }
 .flow-labels b { display: block; font-size: var(--s2); font-weight: 600; color: var(--ink); }
 .flow-labels span { color: var(--muted); }
 .play.flow-toggle { position: absolute; top: 0; right: 0; font-size: 0.75rem; padding: 1px 10px; color: var(--muted); }
 .play.flow-toggle:hover { color: var(--ink); }
+@media (max-width: 640px) {
+  .flow-cue { font-size: var(--s1); }
+}
 
 /* news */
 .news { list-style: none; margin: 0; padding: 0; display: grid; max-width: 72ch; }
@@ -412,16 +423,22 @@ footer { font-size: var(--s1); color: var(--muted); padding-top: 24px; border-to
       <p class="statement">How what we have <em>learned</em> shapes what we attend to, perceive and remember.</p>
       <figure class="flow" id="flow">
         <div class="flow-stage">
-          <p class="flow-loop-label" aria-hidden="true">what we have learned</p>
+          <p class="flow-cue salient" aria-hidden="true">what stands out</p>
+          <p class="flow-cue learned" aria-hidden="true">what we have learned</p>
           <svg viewBox="0 0 600 130" role="img" aria-labelledby="flowDesc">
-            <desc id="flowDesc">Diagram: input from the world streams in from the left, most of it from one part of the field. Attention lets only some of it through. What gets through is perceived and stored in memory, and what has been learned feeds back and moves attention toward where the input comes from.</desc>
-            <defs><marker id="flowArrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow" d="M0 0L8 4L0 8z"/></marker></defs>
+            <desc id="flowDesc">Diagram: input from the world streams in from the left. A gate stands for attention and lets only some of it through. What gets through is perceived and stored in memory. The gate is not fixed. What has been learned moves its opening toward where useful input comes from and narrows it, and something that stands out in the world can pull it away for a moment.</desc>
+            <defs>
+              <marker id="flowArrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow" d="M0 0L8 4L0 8z"/></marker>
+              <marker id="flowArrowCue" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow salient" d="M0 0L8 4L0 8z"/></marker>
+            </defs>
             <path class="track" d="M225 70H507"/>
-            <path class="loop" id="flowLoop" d="M525 48C505 -6 255 -6 234 12" marker-end="url(#flowArrow)"/>
-            <g class="gate"><line id="gTop" x1="225" y1="16" x2="225" y2="56"/><line id="gBot" x1="225" y1="84" x2="225" y2="124"/></g>
+            <path class="loop salient" id="flowCue" d="M30 26C70 -6 180 -8 214 12" marker-end="url(#flowArrowCue)"/>
+            <path class="loop learned" id="flowLoop" d="M525 48C505 -6 255 -6 234 12" marker-end="url(#flowArrow)"/>
+            <g class="gate"><line id="gTop" x1="225" y1="16" x2="225" y2="54"/><line id="gBot" x1="225" y1="86" x2="225" y2="124"/></g>
             <circle class="node" cx="375" cy="70" r="15"/>
             <g class="mem" transform="translate(507 52)"><rect class="on" x="0" y="0" width="10" height="10" rx="2"/><rect class="on" x="13" y="0" width="10" height="10" rx="2"/><rect class="on" x="26" y="0" width="10" height="10" rx="2"/><rect class="on" x="0" y="13" width="10" height="10" rx="2"/><rect x="13" y="13" width="10" height="10" rx="2"/><rect x="26" y="13" width="10" height="10" rx="2"/><rect x="0" y="26" width="10" height="10" rx="2"/><rect x="13" y="26" width="10" height="10" rx="2"/><rect x="26" y="26" width="10" height="10" rx="2"/></g>
-            <g id="flowDots"><circle class="p" cx="22" cy="46" r="3.5"/><circle class="p" cx="60" cy="60" r="3.5"/><circle class="p" cx="98" cy="38" r="3.5"/><circle class="p" cx="142" cy="55" r="3.5"/><circle class="p" cx="178" cy="98" r="3.5"/><circle class="p" cx="214" cy="34" r="3.5" opacity="0.4"/><circle class="p sel" cx="300" cy="70" r="3.5"/><circle class="p sel" cx="450" cy="70" r="5"/></g>
+            <g id="flowDots"><circle class="p" cx="22" cy="46" r="3.5"/><circle class="p" cx="60" cy="60" r="3.5"/><circle class="p" cx="98" cy="38" r="3.5"/><circle class="p" cx="142" cy="55" r="3.5"/><circle class="p" cx="178" cy="98" r="3.5"/><circle class="p" cx="214" cy="34" r="3.5" opacity="0.4"/><circle class="halo" cx="118" cy="100" r="10" opacity="0.4"/><circle class="p sal" cx="118" cy="100" r="5"/><circle class="p sel" cx="300" cy="70" r="3.5"/><circle class="p sel" cx="450" cy="70" r="5"/></g>
+            <circle class="pulse salient" id="flowCuePulse" r="4" opacity="0"/>
             <circle class="pulse" id="flowPulse" r="4" opacity="0"/>
           </svg>
           <ol class="flow-labels">
@@ -1055,8 +1072,11 @@ footer { font-size: var(--s1); color: var(--muted); padding-top: 24px; border-to
   if (first) first.scrollIntoView();
 })();
 // Information flow: input streams in, the gap in the gate (attention) lets some through,
-// it is perceived and stored, and every second stored item sends learning back that moves the gap
-// toward where most input comes from. When memory is full the field changes and attention learns again.
+// and what gets through is perceived and stored. The gate is steered from two sides.
+// From memory: every second stored item sends learning back that moves the gap toward where most
+// input comes from and narrows it. From the world: now and then something stands out, and the gap
+// jumps to it and widens until it has passed. When memory is full the field changes, and the gate
+// opens up again and relearns.
 (function () {
   var fig = document.getElementById('flow');
   if (!fig) return;
@@ -1065,35 +1085,68 @@ footer { font-size: var(--s1); color: var(--muted); padding-top: 24px; border-to
   var gTop = document.getElementById('gTop'), gBot = document.getElementById('gBot');
   var gate = fig.querySelector('.gate'), node = fig.querySelector('.node');
   var cells = Array.prototype.slice.call(fig.querySelectorAll('.mem rect'));
-  var loop = document.getElementById('flowLoop'), pulse = document.getElementById('flowPulse');
   var btn = document.getElementById('flowToggle');
-  var Y = 70, GATE = 225, PERC = 375, MEM = 507, SPEED = 90, GAP = 14, BAND = 18;
-  var gc = Y, gcTarget = Y, band = Y - BAND, stored = 0, dots = [], spawnT = 0, pulseT = -1, resetT = -1;
+  var Y = 70, GATE = 225, PERC = 375, MEM = 507, SPEED = 90, BAND = 18;
+  var GW0 = 16, GWMIN = 10, GWCAP = 18, TOP = 16, BOT = 124;
+  var gc = Y, gw = GW0, learnC = Y, learnW = GW0, band = Y - BAND;
+  var stored = 0, dots = [], spawnT = 0, resetT = -1, cueT = 3.5, cued = null, capture = null;
   var running = false, primed = false, userPaused = false, raf = 0, last = 0;
-  var loopLen = loop.getTotalLength();
+
+  function pulse(pathId, dotId, dur, done) {
+    var path = document.getElementById(pathId);
+    return { path: path, el: document.getElementById(dotId), len: path.getTotalLength(), dur: dur, t: -1, done: done };
+  }
+  var learnPulse = pulse('flowLoop', 'flowPulse', 1.1, function () {
+    learnC += (band - learnC) * 0.5;
+    learnW = Math.max(GWMIN, learnW - 2);
+    flash(gate, 500);
+  });
+  var cuePulse = pulse('flowCue', 'flowCuePulse', 0.8, function () {
+    if (cued && cued.stage === 'in') capture = cued;
+    cued = null;
+  });
 
   function flash(el, ms) { el.classList.add('on'); setTimeout(function () { el.classList.remove('on'); }, ms); }
-  function spawn() {
+  function circle(cls, r) {
     var c = document.createElementNS(NS, 'circle');
-    c.setAttribute('class', 'p'); c.setAttribute('r', '3.5');
+    c.setAttribute('class', cls); c.setAttribute('r', r);
     dotsG.appendChild(c);
-    // Most input comes from one band of the field; the rest is scattered
-    var y = Math.random() < 0.7 ? band + (Math.random() + Math.random() - 1) * 18 : Y + (Math.random() * 2 - 1) * 50;
-    dots.push({ el: c, x: -4, y: y, stage: 'in', a: 1 });
+    return c;
+  }
+  function spawn(salient) {
+    var y;
+    if (salient) {
+      // Something that stands out, away from where attention has settled
+      y = band < Y ? Y + 20 + Math.random() * 16 : Y - 20 - Math.random() * 16;
+    } else {
+      // Most input comes from one band of the field; the rest is scattered
+      y = Math.random() < 0.7 ? band + (Math.random() + Math.random() - 1) * 18 : Y + (Math.random() * 2 - 1) * 50;
+    }
+    var d = { el: circle(salient ? 'p sal' : 'p', salient ? '5' : '3.5'), x: -4, y: y, stage: 'in', a: 1, sal: salient, age: 0 };
+    if (salient) d.halo = circle('halo', '5');
+    dots.push(d);
+    return d;
   }
   function store() {
     if (stored < cells.length) cells[stored].classList.add('on');
     stored++;
-    if (stored % 2 === 0 && stored < cells.length) pulseT = 0;
+    if (stored % 2 === 0 && stored < cells.length) learnPulse.t = 0;
     if (stored === cells.length) resetT = 2.4;
   }
   function tick(now) {
     var dt = Math.min(0.05, (now - last) / 1000); last = now;
     spawnT -= dt;
-    if (spawnT <= 0) { spawn(); spawnT = 0.35; }
-    gc += (gcTarget - gc) * Math.min(1, dt * 2.5);
-    gTop.setAttribute('y2', (gc - GAP).toFixed(1));
-    gBot.setAttribute('y1', (gc + GAP).toFixed(1));
+    if (spawnT <= 0) { spawn(false); spawnT = 0.35; }
+    cueT -= dt;
+    if (cueT <= 0 && !cued && !capture) { cued = spawn(true); cuePulse.t = 0; cueT = 6 + Math.random() * 3; }
+
+    // The gate follows what has been learned, unless something that stands out has caught it
+    var tc = capture ? capture.y : learnC, tw = capture ? GWCAP : learnW, k = capture ? 6 : 2.5;
+    gc += (tc - gc) * Math.min(1, dt * k);
+    gw += (tw - gw) * Math.min(1, dt * k);
+    gTop.setAttribute('y2', Math.max(TOP, gc - gw).toFixed(1));
+    gBot.setAttribute('y1', Math.min(BOT, gc + gw).toFixed(1));
+
     for (var i = dots.length - 1; i >= 0; i--) {
       var d = dots[i];
       if (d.stage === 'out') {
@@ -1101,33 +1154,40 @@ footer { font-size: var(--s1); color: var(--muted); padding-top: 24px; border-to
       } else {
         d.x += SPEED * dt;
         if (d.stage === 'in' && d.x >= GATE - 4) {
-          if (Math.abs(d.y - gc) < GAP - 3) { d.stage = 'sel'; d.el.setAttribute('class', 'p sel'); }
+          if (d.sal || Math.abs(d.y - gc) < gw - 3) { d.stage = 'sel'; d.el.classList.add('sel'); }
           else { d.stage = 'out'; d.x = GATE - 5; }
         }
+        if (capture === d && d.x >= GATE + 20) capture = null;
         if (d.stage === 'sel' || d.stage === 'seen') d.y += (Y - d.y) * Math.min(1, dt * 4);
         if (d.stage === 'sel' && d.x >= PERC) { d.stage = 'seen'; d.el.setAttribute('r', '5'); flash(node, 300); }
         if (d.stage === 'seen' && d.x >= MEM) { store(); d.a = 0; }
+      }
+      if (d.halo) {
+        if (d.stage === 'in') {
+          d.age = (d.age + dt / 0.9) % 1;
+          d.halo.setAttribute('cx', d.x.toFixed(1)); d.halo.setAttribute('cy', d.y.toFixed(1));
+          d.halo.setAttribute('r', (5 + d.age * 9).toFixed(1)); d.halo.setAttribute('opacity', ((1 - d.age) * 0.7).toFixed(2));
+        } else { dotsG.removeChild(d.halo); d.halo = null; }
       }
       if (d.a <= 0) { dotsG.removeChild(d.el); dots.splice(i, 1); continue; }
       d.el.setAttribute('cx', d.x.toFixed(1));
       d.el.setAttribute('cy', d.y.toFixed(1));
       d.el.setAttribute('opacity', d.a.toFixed(2));
     }
-    if (pulseT >= 0) {
-      pulseT += dt / 1.1;
-      if (pulseT >= 1) {
-        pulseT = -1; pulse.setAttribute('opacity', '0');
-        gcTarget += (band - gcTarget) * 0.5; flash(gate, 500);
-      } else {
-        var pt = loop.getPointAtLength(pulseT * loopLen);
-        pulse.setAttribute('cx', pt.x.toFixed(1)); pulse.setAttribute('cy', pt.y.toFixed(1)); pulse.setAttribute('opacity', '1');
-      }
-    }
+
+    [learnPulse, cuePulse].forEach(function (pl) {
+      if (pl.t < 0) return;
+      pl.t += dt / pl.dur;
+      if (pl.t >= 1) { pl.t = -1; pl.el.setAttribute('opacity', '0'); pl.done(); return; }
+      var pt = pl.path.getPointAtLength(pl.t * pl.len);
+      pl.el.setAttribute('cx', pt.x.toFixed(1)); pl.el.setAttribute('cy', pt.y.toFixed(1)); pl.el.setAttribute('opacity', '1');
+    });
+
     if (resetT >= 0) {
       resetT -= dt;
       if (resetT < 0) {
         stored = 0; cells.forEach(function (c) { c.classList.remove('on'); });
-        band = band < Y ? Y + BAND : Y - BAND; gcTarget = Y;
+        band = band < Y ? Y + BAND : Y - BAND; learnC = Y; learnW = GW0;
       }
     }
     raf = requestAnimationFrame(tick);
